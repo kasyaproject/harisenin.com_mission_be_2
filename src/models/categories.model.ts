@@ -1,0 +1,87 @@
+import * as yup from "yup";
+import { ResultSetHeader } from "mysql2";
+import { connectToMySql } from "../db/connectToMySql";
+import { ICategory } from "../utils/interface";
+
+// Schema validasi menggunakan Yup
+export const createCategoryDTO = yup.object({
+  name: yup.string().required("Name is required"),
+  description: yup.string().required("Description is required"),
+});
+
+export type CreateCategoryDto = yup.InferType<typeof createCategoryDTO>;
+
+// Fungsi untuk berinteraksi dengan database
+export const getAllCategories = async (): Promise<ICategory[]> => {
+  const db = await connectToMySql();
+  const [rows] = await db.query("SELECT * FROM categories");
+
+  return rows as ICategory[];
+};
+
+export const getCategoryById = async (
+  id: number
+): Promise<ICategory | null> => {
+  const db = await connectToMySql();
+  const [rows]: any = await db.query("SELECT * FROM categories WHERE id = ?", [
+    id,
+  ]);
+
+  return rows.length ? (rows[0] as ICategory) : null;
+};
+
+export const createCategory = async (
+  data: CreateCategoryDto
+): Promise<ICategory> => {
+  // ✅ Validasi data menggunakan Yup
+  const validatedData = await createCategoryDTO.validate(data, {});
+
+  const db = await connectToMySql();
+  const [result] = await db.query<ResultSetHeader>(
+    "INSERT INTO categories (name, description) VALUES (?, ?)",
+    [validatedData.name, validatedData.description]
+  );
+
+  return {
+    id: result.insertId,
+    ...validatedData,
+  } as ICategory;
+};
+
+export const updateCategory = async (
+  id: number,
+  data: CreateCategoryDto
+): Promise<ICategory> => {
+  // ✅ Validasi data menggunakan Yup
+  const validatedData = await createCategoryDTO.validate(data, {});
+
+  const db = await connectToMySql();
+  const [result] = await db.query<ResultSetHeader>(
+    "UPDATE categories SET name = ?, description = ? WHERE id = ?",
+    [validatedData.name, validatedData.description, id]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Category not found");
+  }
+
+  const updatedCategory = await getCategoryById(id);
+
+  if (!updatedCategory) {
+    throw new Error("Category not found after update");
+  }
+
+  return updatedCategory;
+};
+
+export const deleteCategory = async (id: number): Promise<void> => {
+  const db = await connectToMySql();
+  const [result] = await db.query<ResultSetHeader>(
+    "DELETE FROM categories WHERE id = ?",
+    [id]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Category not found");
+  }
+};

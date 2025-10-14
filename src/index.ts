@@ -2,11 +2,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-
 import { PORT } from "./utils/env";
 import { connectToMySql } from "./db/connectToMySql";
+
 import productsRouter from "./routes/product.route";
 import userRouter from "./routes/user.route";
+import categoryRouter from "./routes/category.route";
 
 async function init() {
   try {
@@ -26,7 +27,7 @@ async function init() {
       });
     });
     // Import routes
-    app.use("/api", [userRouter, productsRouter]);
+    app.use("/api", [userRouter, categoryRouter, productsRouter]);
 
     // Jalankan server
     app.listen(PORT, () => {

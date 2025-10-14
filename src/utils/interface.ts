@@ -9,6 +9,12 @@ export interface IUser {
   role: "admin" | "student";
 }
 
+export interface ICategory {
+  id: number;
+  name: string;
+  description: string;
+}
+
 interface IProduct {
   id: string;
   image: string | null | undefined;

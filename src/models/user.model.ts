@@ -74,12 +74,23 @@ export const createUser = async (data: CreateUserDto): Promise<IUser> => {
 
 export const updateUser = async (
   id: number,
-  data: Partial<IUser>
+  data: CreateUserDto
 ): Promise<IUser> => {
+  // ✅ Validasi data menggunakan Yup
+  const validatedData = await createUserDto.validate(data, {});
+
   const db = await connectToMySql();
   const [result] = await db.query<ResultSetHeader>(
-    "UPDATE users SET ? WHERE id = ?",
-    [data, id]
+    "UPDATE users SET fullName = ?, email = ?, noTelp = ?, password = ?, profileImg = ?, role = ? WHERE id = ?",
+    [
+      validatedData.fullName,
+      validatedData.email,
+      validatedData.noTelp,
+      validatedData.password,
+      validatedData.profileImg,
+      validatedData.role,
+      id,
+    ]
   );
 
   if (result.affectedRows === 0) {
