@@ -1,4 +1,5 @@
 import { Response } from "express";
+import * as yup from "yup";
 
 export default {
   success(res: Response, data: any, message: string) {
@@ -12,16 +13,14 @@ export default {
   },
 
   error(res: Response, error: unknown, message: string) {
-    // Response error dari mongoDB
-    if ((error as any)?.code) {
-      const _err = error as any;
-
-      return res.status(500).json({
+    // Response error dari yup validasi
+    if (error instanceof yup.ValidationError) {
+      return res.status(400).json({
         meta: {
-          status: 500,
-          message: _err?.errorResponse?.errmsg,
+          status: 400,
+          message,
         },
-        data: _err,
+        data: { [`${error.path}`]: error.errors[0] },
       });
     }
 

@@ -15,6 +15,15 @@ export interface ICategory {
   description: string;
 }
 
+export interface ITutor {
+  id: number;
+  fullName: string;
+  avatarImg: string;
+  title: string;
+  companyName: string;
+  jobTitle: string;
+}
+
 interface IProduct {
   id: string;
   image: string | null | undefined;

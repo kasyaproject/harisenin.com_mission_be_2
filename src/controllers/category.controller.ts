@@ -3,7 +3,7 @@ import {
   createCategory,
   deleteCategory,
   getAllCategories,
-  getCategoryById,
+  getOneCategory,
   updateCategory,
 } from "../models/categories.model";
 import response from "../utils/response";
@@ -22,7 +22,7 @@ export default {
   async getCategoryById(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const category = await getCategoryById(Number(id));
+      const category = await getOneCategory(Number(id));
 
       if (category) {
         response.success(res, category, "Get Category by ID success");

@@ -8,6 +8,7 @@ import { connectToMySql } from "./db/connectToMySql";
 import productsRouter from "./routes/product.route";
 import userRouter from "./routes/user.route";
 import categoryRouter from "./routes/category.route";
+import tutorRouter from "./routes/tutor.route";
 
 async function init() {
   try {
@@ -27,7 +28,7 @@ async function init() {
       });
     });
     // Import routes
-    app.use("/api", [userRouter, categoryRouter, productsRouter]);
+    app.use("/api", [userRouter, categoryRouter, tutorRouter, productsRouter]);
 
     // Jalankan server
     app.listen(PORT, () => {

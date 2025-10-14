@@ -19,9 +19,7 @@ export const getAllCategories = async (): Promise<ICategory[]> => {
   return rows as ICategory[];
 };
 
-export const getCategoryById = async (
-  id: number
-): Promise<ICategory | null> => {
+export const getOneCategory = async (id: number): Promise<ICategory | null> => {
   const db = await connectToMySql();
   const [rows]: any = await db.query("SELECT * FROM categories WHERE id = ?", [
     id,
@@ -65,7 +63,7 @@ export const updateCategory = async (
     throw new Error("Category not found");
   }
 
-  const updatedCategory = await getCategoryById(id);
+  const updatedCategory = await getOneCategory(id);
 
   if (!updatedCategory) {
     throw new Error("Category not found after update");
