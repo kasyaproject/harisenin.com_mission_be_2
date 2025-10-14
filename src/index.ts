@@ -9,6 +9,7 @@ import productsRouter from "./routes/product.route";
 import userRouter from "./routes/user.route";
 import categoryRouter from "./routes/category.route";
 import tutorRouter from "./routes/tutor.route";
+import pretestRouter from "./routes/pretest.route";
 
 async function init() {
   try {
@@ -28,7 +29,13 @@ async function init() {
       });
     });
     // Import routes
-    app.use("/api", [userRouter, categoryRouter, tutorRouter, productsRouter]);
+    app.use("/api", [
+      userRouter,
+      categoryRouter,
+      tutorRouter,
+      pretestRouter,
+      productsRouter,
+    ]);
 
     // Jalankan server
     app.listen(PORT, () => {

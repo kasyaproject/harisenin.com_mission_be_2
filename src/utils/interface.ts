@@ -24,6 +24,13 @@ export interface ITutor {
   jobTitle: string;
 }
 
+export interface IPretest {
+  id: number;
+  question: string;
+  options: string[]; // Simpan sebagai JSON string
+  correct_answer: string;
+}
+
 interface IProduct {
   id: string;
   image: string | null | undefined;
