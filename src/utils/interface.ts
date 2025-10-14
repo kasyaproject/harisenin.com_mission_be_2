@@ -52,19 +52,19 @@ export interface IMateri_Modul {
 }
 
 export interface IProduct {
-  id: string;
-  image: string | null | undefined;
+  id: number;
   title: string;
-  desc: string;
-  category: string[];
-
-  author: string;
-  authorImage: string;
-  authorTitle: string;
-  authorCompany: string;
-
-  rating: number;
-  review: number;
+  description: string;
+  coverImg: string;
   price: number;
   discount: number;
+  author_id: number;
+  pretest_id: number;
+}
+
+export interface IReview {
+  id: number;
+  rating: number;
+  review: string;
+  user_id: number;
 }

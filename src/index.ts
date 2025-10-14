@@ -6,6 +6,8 @@ import { PORT } from "./utils/env";
 import { connectToMySql } from "./db/connectToMySql";
 
 import userRouter from "./routes/user.route";
+import productRouter from "./routes/products.route";
+import reviewRouter from "./routes/review.route";
 import categoryRouter from "./routes/category.route";
 import tutorRouter from "./routes/tutor.route";
 import pretestRouter from "./routes/pretest.route";
@@ -33,6 +35,8 @@ async function init() {
     // Import routes
     app.use("/api", [
       userRouter,
+      productRouter,
+      reviewRouter,
       categoryRouter,
       tutorRouter,
       pretestRouter,

@@ -3,7 +3,7 @@ import {
   addMateriToModul,
   getMateriByModul,
   removeMateriFromModul,
-} from "../models/modul_materi.model";
+} from "../models/modul_materis.model";
 import response from "../utils/response";
 
 export default {

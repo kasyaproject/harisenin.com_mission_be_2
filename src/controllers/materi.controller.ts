@@ -5,7 +5,7 @@ import {
   getOneMateri,
   removeMateri,
   updateMateri,
-} from "../models/materi.model";
+} from "../models/materis.model";
 import response from "../utils/response";
 
 export default {

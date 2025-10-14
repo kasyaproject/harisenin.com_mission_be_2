@@ -6,7 +6,7 @@ import {
   getOneUser,
   removeUser,
   updateUser,
-} from "../models/user.model";
+} from "../models/users.model";
 import { ValidationError } from "yup";
 
 export default {

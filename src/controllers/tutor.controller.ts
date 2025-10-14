@@ -5,7 +5,7 @@ import {
   getAllTutors,
   getOneTutor,
   updateTutor,
-} from "../models/tutor.model";
+} from "../models/tutors.model";
 import response from "../utils/response";
 
 export default {
