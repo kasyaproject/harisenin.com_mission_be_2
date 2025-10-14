@@ -31,7 +31,27 @@ export interface IPretest {
   correct_answer: string;
 }
 
-interface IProduct {
+export interface IMateri {
+  id: number;
+  title: string;
+  content: string;
+  video_url: string;
+}
+
+export interface IModuls {
+  id: number;
+  title: string;
+  description: string;
+  materi_list: IMateri[];
+}
+
+export interface IMateri_Modul {
+  id: number;
+  modul_id: number;
+  materi_id: number;
+}
+
+export interface IProduct {
   id: string;
   image: string | null | undefined;
   title: string;
@@ -48,5 +68,3 @@ interface IProduct {
   price: number;
   discount: number;
 }
-
-export type { IProduct };

@@ -5,11 +5,13 @@ import bodyParser from "body-parser";
 import { PORT } from "./utils/env";
 import { connectToMySql } from "./db/connectToMySql";
 
-import productsRouter from "./routes/product.route";
 import userRouter from "./routes/user.route";
 import categoryRouter from "./routes/category.route";
 import tutorRouter from "./routes/tutor.route";
 import pretestRouter from "./routes/pretest.route";
+import materiRouter from "./routes/materi.route";
+import modulRouter from "./routes/modul.route";
+import modul_materiRouter from "./routes/modul_materi.route";
 
 async function init() {
   try {
@@ -34,7 +36,9 @@ async function init() {
       categoryRouter,
       tutorRouter,
       pretestRouter,
-      productsRouter,
+      materiRouter,
+      modulRouter,
+      modul_materiRouter,
     ]);
 
     // Jalankan server
