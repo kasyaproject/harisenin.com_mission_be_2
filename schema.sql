@@ -201,3 +201,72 @@ VALUES
 (4.0, 'Materi yang sangat menarik dan membantu meningkatkan kemampuan React. Terima kasih!', 2),
 (4.8, 'Materi yang sangat membantu dalam memahami konsep React. Pembahasan yang jelas dan mudah dipahami.', 1),
 (4.5, 'Kursus ini membantu saya memahami dasar-dasar React. Terima kasih!', 2);
+
+-- Create table for payments
+CREATE TABLE payments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  price DECIMAL(10, 2) NOT NULL,
+  discount DECIMAL(10, 2) NOT NULL,
+  total_price DECIMAL(10, 2) NOT NULL,
+  status VARCHAR(100) NOT NULL,
+  payment_method VARCHAR(100) NOT NULL,
+  payment_url VARCHAR(255) NOT NULL,
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+);
+
+-- Seed initial Payments
+INSERT INTO payments (price, discount, total_price, status, payment_method, payment_url)
+VALUES
+(100000, 0, 100000, 'pending', 'bank transfer', 'https://example.com/bank-transfer'),
+(150000, 0, 150000, 'cancelled', 'bank transfer', 'https://example.com/bank-transfer'),
+(200000, 0, 200000, 'paid', 'bank transfer', 'https://example.com/bank-transfer'),
+(250000, 0, 250000, 'paid', 'bank transfer', 'https://example.com/bank-transfer');
+
+-- Create table for orders
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  product_id INT NOT NULL,
+  payment_id INT NOT NULL,
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  FOREIGN KEY (payment_id) REFERENCES payments(id) ON DELETE CASCADE
+);
+
+-- Seed initial Orders
+INSERT INTO orders (user_id, product_id, payment_id)
+VALUES
+(2, 1, 1),
+(2, 2, 2),
+(2, 3, 3),
+(2, 4, 4);
+
+-- Create table for myCourses
+CREATE TABLE myCourses (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  product_id INT NOT NULL,
+  order_id INT NOT NULL,
+  status VARCHAR(100) NOT NULL,
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+
+-- Seed initial myCourses
+INSERT INTO myCourses (user_id, product_id, order_id, status)
+VALUES
+(2, 1, 1, 'active'),
+(2, 2, 2, 'done'),
+(2, 3, 3, 'done'),
+(2, 4, 4, 'active');

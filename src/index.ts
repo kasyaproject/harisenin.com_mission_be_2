@@ -16,6 +16,7 @@ import modulRouter from "./routes/modul.route";
 import modul_materiRouter from "./routes/modul_materi.route";
 import paymentRouter from "./routes/payment.route";
 import orderRouter from "./routes/order.route";
+import myCourseRouter from "./routes/myCourse.route";
 
 async function init() {
   try {
@@ -47,6 +48,7 @@ async function init() {
       modul_materiRouter,
       paymentRouter,
       orderRouter,
+      myCourseRouter,
     ]);
 
     // Jalankan server

@@ -85,3 +85,11 @@ export interface IOrder {
   product_id: number;
   payment_id: number;
 }
+
+export interface ICourse {
+  id: number;
+  user_id: number;
+  product_id: number;
+  order_id: number;
+  status: string;
+}
