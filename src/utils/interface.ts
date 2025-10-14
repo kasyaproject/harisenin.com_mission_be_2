@@ -68,3 +68,20 @@ export interface IReview {
   review: string;
   user_id: number;
 }
+
+export interface IPayment {
+  id: number;
+  price: number;
+  discount: number;
+  total_price: number;
+  status: string;
+  payment_method: string;
+  payment_url: string;
+}
+
+export interface IOrder {
+  id: number;
+  user_id: number;
+  product_id: number;
+  payment_id: number;
+}
