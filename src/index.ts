@@ -19,6 +19,7 @@ import paymentRouter from "./routes/payment.route";
 import orderRouter from "./routes/order.route";
 import myCourseRouter from "./routes/myCourse.route";
 import product_categoryRouter from "./routes/product_categories.route";
+import product_reviewsRouter from "./routes/product_reviews.route";
 
 async function init() {
   try {
@@ -53,6 +54,7 @@ async function init() {
       orderRouter,
       myCourseRouter,
       product_categoryRouter,
+      product_reviewsRouter,
     ]);
 
     // Jalankan server

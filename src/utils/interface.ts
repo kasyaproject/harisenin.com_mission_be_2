@@ -63,6 +63,12 @@ export interface IProduct_Category {
   category_id: number;
 }
 
+export interface IProduct_Review {
+  id: number;
+  product_id: number;
+  review_id: number;
+}
+
 export interface IProduct {
   id: number;
   title: string;
