@@ -57,6 +57,12 @@ export interface IModul_Product {
   product_id: number;
 }
 
+export interface IProduct_Category {
+  id: number;
+  product_id: number;
+  category_id: number;
+}
+
 export interface IProduct {
   id: number;
   title: string;

@@ -297,7 +297,6 @@ VALUES
 (1, 6),
 (2, 7);
 
----------------------------------------------------------------------------------
 -- Create table for product_categories
 CREATE TABLE product_categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -330,6 +329,7 @@ VALUES
 (9, 2),
 (9, 5);
 
+---------------------------------------------------------------------------------
 -- Create table for product_reviews
 CREATE TABLE product_reviews (
   id INT AUTO_INCREMENT PRIMARY KEY,
