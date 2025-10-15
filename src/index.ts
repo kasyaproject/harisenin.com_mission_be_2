@@ -14,6 +14,7 @@ import pretestRouter from "./routes/pretest.route";
 import materiRouter from "./routes/materi.route";
 import modulRouter from "./routes/modul.route";
 import modul_materiRouter from "./routes/modul_materi.route";
+import modul_productRouter from "./routes/modul_product.route";
 import paymentRouter from "./routes/payment.route";
 import orderRouter from "./routes/order.route";
 import myCourseRouter from "./routes/myCourse.route";
@@ -46,6 +47,7 @@ async function init() {
       materiRouter,
       modulRouter,
       modul_materiRouter,
+      modul_productRouter,
       paymentRouter,
       orderRouter,
       myCourseRouter,

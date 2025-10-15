@@ -270,3 +270,84 @@ VALUES
 (2, 2, 2, 'done'),
 (2, 3, 3, 'done'),
 (2, 4, 4, 'active');
+
+-- Create table for modul_products
+CREATE TABLE modul_products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  modul_id INT NOT NULL,
+  product_id INT NOT NULL,
+
+  FOREIGN KEY (modul_id) REFERENCES moduls(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+-- Seed initial modul_products
+INSERT INTO modul_products (modul_id, product_id)
+VALUES
+(1, 1),
+(2, 1),
+(1, 2),
+(2, 2),
+(1, 3),
+(2, 3),
+(1, 4),
+(2, 4),
+(1, 5),
+(2, 5),
+(1, 6),
+(2, 7);
+
+---------------------------------------------------------------------------------
+-- Create table for product_categories
+CREATE TABLE product_categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  category_id INT NOT NULL,
+
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+
+-- Seed initial product_categories
+INSERT INTO product_categories (product_id, category_id)
+VALUES
+(1, 2),
+(1, 4),
+(2, 1),
+(2, 5),
+(3, 2),
+(3, 3),
+(4, 1),
+(4, 4),
+(5, 3),
+(5, 5),
+(6, 2),
+(6, 5),
+(7, 1),
+(7, 3),
+(8, 4),
+(8, 5),
+(9, 2),
+(9, 5);
+
+-- Create table for product_reviews
+CREATE TABLE product_reviews (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  review_id INT NOT NULL,
+
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE
+);
+
+-- Seed initial product_reviews
+INSERT INTO product_reviews (product_id, review_id)
+VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(4, 8);

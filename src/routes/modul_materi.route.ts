@@ -3,6 +3,7 @@ import modul_materiController from "../controllers/modul_materi.controller";
 
 const router = express.Router();
 
+router.get("/modul-materi/:id", modul_materiController.getMateriByModul);
 router.post("/modul-materi", modul_materiController.createModulMateri);
 router.delete(
   "/modul-materi/:id",

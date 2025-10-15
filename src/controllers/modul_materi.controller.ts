@@ -7,14 +7,15 @@ import {
 import response from "../utils/response";
 
 export default {
+  // Ambil semua materi berdasarkan id modul
   getMateriByModul: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const materi = await getMateriByModul(Number(id));
 
-      response.success(res, materi, "Get Materi by ID success");
+      response.success(res, materi, "Get Materi by ID Modul success");
     } catch (err) {
-      response.error(res, err, "Failed to get Materi by ID");
+      response.error(res, err, "Failed to get Materi by ID Modul");
     }
   },
 
@@ -28,6 +29,7 @@ export default {
     }
   },
 
+  // Hapus materi dari modul berdasarkan id materi
   removeMateriFromModul: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
