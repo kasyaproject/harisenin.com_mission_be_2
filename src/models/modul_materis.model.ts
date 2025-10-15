@@ -21,7 +21,21 @@ export const addMateriToModul = async (data: IMateri_Modul) => {
     [data.modul_id, data.materi_id]
   );
 
-  return result.insertId;
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query(
+    "SELECT * FROM modul_materi WHERE id = ?",
+    [result.insertId]
+  );
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve Modul Materi course data");
+  }
+
+  // ✅ Return data lengkap
+  return {
+    message: "Course Modul Materi successfully",
+    data: rows[0],
+  };
 };
 
 // Hapus materi dari modul
@@ -35,5 +49,19 @@ export const removeMateriFromModul = async (
     [modul_id, data.materi_id]
   );
 
-  return result.affectedRows > 0;
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query(
+    "SELECT * FROM modul_materi WHERE id = ?",
+    [result.insertId]
+  );
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve Modul Materi course data");
+  }
+
+  // ✅ Return data lengkap
+  return {
+    message: "Course Modul Materi successfully",
+    data: rows[0],
+  };
 };

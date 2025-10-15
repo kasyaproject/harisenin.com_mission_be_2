@@ -28,9 +28,7 @@ export const getOneCategory = async (id: number): Promise<ICategory | null> => {
   return rows.length ? (rows[0] as ICategory) : null;
 };
 
-export const createCategory = async (
-  data: CreateCategoryDto
-): Promise<ICategory> => {
+export const createCategory = async (data: CreateCategoryDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createCategoryDTO.validate(data, {});
 
@@ -40,10 +38,20 @@ export const createCategory = async (
     [validatedData.name, validatedData.description]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM categories WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Categories data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as ICategory;
+    message: "Categories created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateCategory = async (

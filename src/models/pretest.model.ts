@@ -32,9 +32,7 @@ export const getOnePretest = async (id: number): Promise<IPretest | null> => {
   return rows.length ? (rows[0] as IPretest) : null;
 };
 
-export const createPretest = async (
-  data: CreatePretestDto
-): Promise<IPretest> => {
+export const createPretest = async (data: CreatePretestDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createPretestDTO.validate(data, {});
 
@@ -44,10 +42,20 @@ export const createPretest = async (
     [data.question, JSON.stringify(data.options), data.correct_answer]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM pretests WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Pretests data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IPretest;
+    message: "Pretests created successfully",
+    data: rows[0],
+  };
 };
 
 export const updatePretest = async (

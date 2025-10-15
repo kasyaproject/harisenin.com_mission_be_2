@@ -48,7 +48,7 @@ export const getOneUser = async (id: number): Promise<IUser | null> => {
   return rows.length ? (rows[0] as IUser) : null;
 };
 
-export const createUser = async (data: CreateUserDto): Promise<IUser> => {
+export const createUser = async (data: CreateUserDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createUserDto.validate(data, {});
 
@@ -66,10 +66,20 @@ export const createUser = async (data: CreateUserDto): Promise<IUser> => {
     ]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM users WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created User data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IUser;
+    message: "User created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateUser = async (

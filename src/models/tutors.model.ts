@@ -28,7 +28,7 @@ export const getOneTutor = async (id: number): Promise<ITutor | null> => {
   return rows.length ? (rows[0] as ITutor) : null;
 };
 
-export const createTutor = async (data: CreateTutorDto): Promise<ITutor> => {
+export const createTutor = async (data: CreateTutorDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createTutorDTO.validate(data, {});
 
@@ -44,10 +44,20 @@ export const createTutor = async (data: CreateTutorDto): Promise<ITutor> => {
     ]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM tutors WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Tutors data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as ITutor;
+    message: "Tutors created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateTutor = async (

@@ -29,7 +29,7 @@ export const getOneReview = async (id: number): Promise<IReview | null> => {
   return rows.length ? (rows[0] as IReview) : null;
 };
 
-export const createReview = async (data: CreateReviewDto): Promise<IReview> => {
+export const createReview = async (data: CreateReviewDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createReviewDTO.validate(data, {});
 
@@ -39,10 +39,20 @@ export const createReview = async (data: CreateReviewDto): Promise<IReview> => {
     [validatedData]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM reviews WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Reviews data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IReview;
+    message: "Reviews created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateReview = async (

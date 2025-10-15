@@ -44,8 +44,18 @@ export const createOrder = async (data: CreateOrderDto) => {
     validatedData,
   ]);
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM orders WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Orders data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IOrder;
+    message: "Orders created successfully",
+    data: rows[0],
+  };
 };

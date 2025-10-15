@@ -7,6 +7,17 @@ import {
 import response from "../utils/response";
 
 export default {
+  getMateriByModul: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const materi = await getMateriByModul(Number(id));
+
+      response.success(res, materi, "Get Materi by ID success");
+    } catch (err) {
+      response.error(res, err, "Failed to get Materi by ID");
+    }
+  },
+
   createModulMateri: async (req: Request, res: Response) => {
     try {
       const materi = await addMateriToModul(req.body);

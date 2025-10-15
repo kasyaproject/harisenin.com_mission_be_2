@@ -28,7 +28,7 @@ export const getOneMateri = async (id: number): Promise<IMateri | null> => {
   return rows.length ? (rows[0] as IMateri) : null;
 };
 
-export const createMateri = async (data: CreateMateriDto): Promise<IMateri> => {
+export const createMateri = async (data: CreateMateriDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createMateriDTO.validate(data, {});
 
@@ -38,10 +38,20 @@ export const createMateri = async (data: CreateMateriDto): Promise<IMateri> => {
     [validatedData.title, validatedData.content, validatedData.video_url]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM materis WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Materi data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IMateri;
+    message: "Materi created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateMateri = async (

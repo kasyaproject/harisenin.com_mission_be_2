@@ -33,9 +33,7 @@ export const getOneProduct = async (id: number): Promise<IProduct | null> => {
   return rows.length ? (rows[0] as IProduct) : null;
 };
 
-export const createProduct = async (
-  data: CreateProductDto
-): Promise<IProduct> => {
+export const createProduct = async (data: CreateProductDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createProductDTO.validate(data, {});
 
@@ -45,10 +43,20 @@ export const createProduct = async (
     [validatedData]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM products WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Products data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IProduct;
+    message: "Products created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateProduct = async (

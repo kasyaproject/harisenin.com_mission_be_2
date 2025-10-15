@@ -41,10 +41,20 @@ export const createPayment = async (data: CreatePaymentDto) => {
     [validatedData]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM payments WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Payments data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IPayment;
+    message: "Payments created successfully",
+    data: rows[0],
+  };
 };
 
 export const paidPayment = async (id: number) => {

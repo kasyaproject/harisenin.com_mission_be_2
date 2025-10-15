@@ -51,6 +51,12 @@ export interface IMateri_Modul {
   materi_id: number;
 }
 
+export interface IModul_Product {
+  id: number;
+  modul_id: number;
+  product_id: number;
+}
+
 export interface IProduct {
   id: number;
   title: string;

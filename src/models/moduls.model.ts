@@ -95,7 +95,7 @@ export const getOneModul = async (id: number): Promise<IModuls | null> => {
   return modul;
 };
 
-export const createModul = async (data: CreateModulDto): Promise<IModuls> => {
+export const createModul = async (data: CreateModulDto) => {
   // ✅ Validasi data menggunakan Yup
   const validatedData = await createModulDTO.validate(data, {});
 
@@ -105,10 +105,20 @@ export const createModul = async (data: CreateModulDto): Promise<IModuls> => {
     [validatedData.title, validatedData.description]
   );
 
+  // ✅ Ambil data yang baru dibuat berdasarkan insertId
+  const [rows]: any = await db.query("SELECT * FROM moduls WHERE id = ?", [
+    result.insertId,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Failed to retrieve created Moduls data");
+  }
+
+  // ✅ Return data lengkap
   return {
-    id: result.insertId,
-    ...validatedData,
-  } as IModuls;
+    message: "Moduls created successfully",
+    data: rows[0],
+  };
 };
 
 export const updateModul = async (
